@@ -1,18 +1,28 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from 'expo-router'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { queryClient, persister, PERSIST_MAX_AGE } from '../api/cache'
+import { configurarOnlineManager } from '../api/online'
+import { queryKeys } from '../api/queryKeys'
+import { log } from '../utils/log'
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+configurarOnlineManager()
 
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function Layout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{ persister, maxAge: PERSIST_MAX_AGE, buster: 'v2' }}
+      onSuccess={() => {
+        // La caché ya se restauró: reintenta lo que quedó pendiente de la sesión anterior
+        log('Caché restaurada → reanudando mutaciones pausadas')
+        queryClient
+          .resumePausedMutations()
+          .then(() =>
+            queryClient.invalidateQueries({ queryKey: queryKeys.favoritos.all }),
+          )
+      }}
+    >
+      <Stack screenOptions={{ headerShown: false }} />
+    </PersistQueryClientProvider>
+  )
 }

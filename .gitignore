@@ -32,6 +32,8 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
+
 
 # typescript
 *.tsbuildinfo
@@ -41,3 +43,7 @@ example
 # generated native folders
 /ios
 /android
+
+# Project specific exclusions
+contexto_proyecto.md
+export_context.js*
