@@ -48,6 +48,7 @@ export default function CatalogoScreen() {
           </View>
         ) : (
           <FlatList
+            key="pokemon-grid-2"
             data={consultaPokemon.data ?? []}
             keyExtractor={(pokemon) => String(pokemon.id)}
             renderItem={({ item }) => (
@@ -56,15 +57,12 @@ export default function CatalogoScreen() {
                 favorito={favoritosPorId.get(item.id)}
               />
             )}
+            numColumns={2}
+            columnWrapperStyle={styles.filaCuadricula}
             contentContainerStyle={styles.lista}
             initialNumToRender={12}
             maxToRenderPerBatch={12}
             windowSize={9}
-            getItemLayout={(_, index) => ({
-              length: 72,
-              offset: 72 * index,
-              index,
-            })}
           />
         )}
       </SafeAreaView>
@@ -78,7 +76,13 @@ const styles = StyleSheet.create({
     backgroundColor: colores.fondo,
   },
   lista: {
+    paddingHorizontal: 16,
+    paddingTop: 12,
     paddingBottom: 16,
+    gap: 12,
+  },
+  filaCuadricula: {
+    justifyContent: 'space-around',
   },
   estado: {
     flex: 1,

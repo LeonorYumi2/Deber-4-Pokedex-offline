@@ -56,11 +56,13 @@ export default function FavoritosScreen() {
           </View>
         ) : (
           <FlatList
+            key="favorites-grid-2"
             data={favoritos}
             keyExtractor={(favorito) => favorito.id}
             renderItem={({ item }) => <FavoritoRow favorito={item} />}
+            numColumns={2}
+            columnWrapperStyle={styles.filaCuadricula}
             contentContainerStyle={styles.lista}
-            ItemSeparatorComponent={() => <View style={styles.separador} />}
           />
         )}
       </SafeAreaView>
@@ -75,11 +77,12 @@ const styles = StyleSheet.create({
   },
   lista: {
     paddingHorizontal: 16,
-    paddingTop: 14,
-    paddingBottom: 20,
+    paddingTop: 12,
+    paddingBottom: 16,
+    gap: 12,
   },
-  separador: {
-    height: 10,
+  filaCuadricula: {
+    justifyContent: 'space-around',
   },
   estado: {
     flex: 1,

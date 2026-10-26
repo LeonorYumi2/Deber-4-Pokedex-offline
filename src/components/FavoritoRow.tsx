@@ -18,7 +18,9 @@ export function FavoritoRow({ favorito }: { favorito: Favorito }) {
       }}
       asChild
     >
-      <Pressable style={({ pressed }) => [styles.fila, pressed && styles.presionada]}>
+      <Pressable
+        style={({ pressed }) => [styles.tarjeta, pressed && styles.presionada]}
+      >
         <View style={[styles.franja, { backgroundColor: colorTipo }]} />
         <View style={styles.spriteContenedor}>
           <Image
@@ -29,30 +31,29 @@ export function FavoritoRow({ favorito }: { favorito: Favorito }) {
             accessibilityLabel={`Sprite de ${favorito.nombre}`}
           />
         </View>
-        <View style={styles.contenido}>
-          <View style={styles.tituloFila}>
-            <Text style={styles.nombre} numberOfLines={1}>
-              {favorito.nombre.charAt(0).toLocaleUpperCase() +
-                favorito.nombre.slice(1)}
-            </Text>
-            {favorito.pendiente ? (
-              <Text style={styles.etiqueta}>Pendiente</Text>
-            ) : null}
-          </View>
-          <Text style={styles.nota} numberOfLines={2}>
-            {favorito.nota || 'Sin nota'}
-          </Text>
-        </View>
+        {favorito.pendiente ? (
+          <Text style={styles.etiqueta}>Pendiente</Text>
+        ) : null}
+        <Text style={styles.nombre} numberOfLines={1}>
+          {favorito.nombre.charAt(0).toLocaleUpperCase() +
+            favorito.nombre.slice(1)}
+        </Text>
+        <Text style={styles.nota} numberOfLines={2}>
+          {favorito.nota || 'Sin nota'}
+        </Text>
       </Pressable>
     </Link>
   )
 }
 
 const styles = StyleSheet.create({
-  fila: {
-    minHeight: 94,
-    flexDirection: 'row',
+  tarjeta: {
+    width: '48%',
+    minHeight: 200,
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 16,
     backgroundColor: colores.superficie,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: colores.borde,
@@ -60,49 +61,48 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   presionada: {
-    opacity: 0.82,
+    opacity: 0.86,
   },
   franja: {
-    width: 4,
-    alignSelf: 'stretch',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 4,
   },
   spriteContenedor: {
-    width: 58,
-    height: 58,
-    marginHorizontal: 12,
+    width: 88,
+    height: 88,
+    marginBottom: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 29,
+    borderRadius: 44,
     backgroundColor: colores.fondo,
   },
   sprite: {
-    width: 52,
-    height: 52,
-  },
-  contenido: {
-    flex: 1,
-    paddingVertical: 14,
-    paddingRight: 14,
-    gap: 4,
-  },
-  tituloFila: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    width: 82,
+    height: 82,
   },
   nombre: {
-    flexShrink: 1,
+    maxWidth: '100%',
     color: colores.texto,
     fontFamily: fuentes.bold,
-    fontSize: 16,
+    fontSize: 15,
+    textAlign: 'center',
   },
   nota: {
+    alignSelf: 'stretch',
+    marginTop: 5,
     color: colores.textoSuave,
     fontFamily: fuentes.regular,
-    fontSize: 13,
-    lineHeight: 18,
+    fontSize: 12,
+    lineHeight: 16,
+    textAlign: 'center',
   },
   etiqueta: {
+    position: 'absolute',
+    top: 9,
+    right: 10,
     color: colores.pendiente,
     fontFamily: fuentes.medium,
     fontSize: 10,

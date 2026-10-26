@@ -17,7 +17,9 @@ export function PokemonRow({
       href={{ pathname: '/pokemon/[id]', params: { id: String(pokemon.id) } }}
       asChild
     >
-      <Pressable style={({ pressed }) => [styles.fila, pressed && styles.presionada]}>
+      <Pressable
+        style={({ pressed }) => [styles.tarjeta, pressed && styles.presionada]}
+      >
         <View style={styles.spriteContenedor}>
           <Image
             source={{ uri: pokemon.sprite }}
@@ -37,69 +39,71 @@ export function PokemonRow({
               styles.estrella,
               favorito.pendiente && styles.estrellaPendiente,
             ]}
+            accessible
             accessibilityLabel={
               favorito.pendiente ? 'Favorito pendiente' : 'Favorito'
             }
           >
             ★
           </Text>
-        ) : (
-          <View style={styles.espacioEstrella} />
-        )}
+        ) : null}
       </Pressable>
     </Link>
   )
 }
 
 const styles = StyleSheet.create({
-  fila: {
-    minHeight: 72,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colores.borde,
-    backgroundColor: colores.fondo,
-  },
-  presionada: {
-    backgroundColor: colores.superficie,
-  },
-  spriteContenedor: {
-    width: 52,
-    height: 52,
-    marginRight: 12,
+  tarjeta: {
+    width: '48%',
+    minHeight: 164,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 26,
+    paddingHorizontal: 10,
+    paddingVertical: 14,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colores.borde,
+    borderRadius: 16,
     backgroundColor: colores.superficie,
   },
+  presionada: {
+    opacity: 0.82,
+  },
+  spriteContenedor: {
+    width: 88,
+    height: 88,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 44,
+    backgroundColor: colores.fondo,
+  },
   sprite: {
-    width: 48,
-    height: 48,
+    width: 82,
+    height: 82,
   },
   numero: {
-    width: 42,
+    marginTop: 6,
     color: colores.textoSuave,
     fontFamily: fuentes.medium,
     fontSize: 12,
     fontVariant: ['tabular-nums'],
+    textAlign: 'center',
   },
   nombre: {
-    flex: 1,
+    maxWidth: '100%',
+    marginTop: 2,
     color: colores.texto,
     fontFamily: fuentes.medium,
-    fontSize: 16,
+    fontSize: 15,
+    textAlign: 'center',
   },
   estrella: {
-    width: 28,
+    position: 'absolute',
+    top: 8,
+    right: 10,
     color: colores.texto,
-    fontSize: 22,
-    textAlign: 'right',
+    fontSize: 20,
   },
   estrellaPendiente: {
     color: colores.pendiente,
-  },
-  espacioEstrella: {
-    width: 28,
   },
 })
