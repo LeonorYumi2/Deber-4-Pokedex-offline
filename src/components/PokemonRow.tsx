@@ -1,8 +1,9 @@
 import { Image } from 'expo-image'
 import { Link } from 'expo-router'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { colorDeTipo, colores } from '../constants/theme'
+import { usePokemonDetalle } from '../hooks/usePokemon'
 import type { PokemonResumen } from '../types/pokemon'
-import { colores } from '../constants/theme'
 import { fuentes } from './FontGate'
 
 export function PokemonRow({
@@ -12,6 +13,9 @@ export function PokemonRow({
   pokemon: PokemonResumen
   favorito?: { pendiente?: boolean }
 }) {
+  const { data: detalle } = usePokemonDetalle(pokemon.id)
+  const colorTipo = colorDeTipo(detalle?.tipos[0])
+
   return (
     <Link
       href={{ pathname: '/pokemon/[id]', params: { id: String(pokemon.id) } }}
@@ -20,6 +24,7 @@ export function PokemonRow({
       <Pressable
         style={({ pressed }) => [styles.tarjeta, pressed && styles.presionada]}
       >
+        <View style={[styles.detalleTipo, { backgroundColor: colorTipo }]} />
         <View style={styles.spriteContenedor}>
           <Image
             source={{ uri: pokemon.sprite }}
@@ -54,6 +59,7 @@ export function PokemonRow({
 
 const styles = StyleSheet.create({
   tarjeta: {
+    position: 'relative',
     width: '48%',
     minHeight: 164,
     alignItems: 'center',
@@ -67,6 +73,15 @@ const styles = StyleSheet.create({
   },
   presionada: {
     opacity: 0.82,
+  },
+  detalleTipo: {
+    position: 'absolute',
+    top: 0,
+    left: 16,
+    right: 16,
+    height: 3,
+    borderBottomLeftRadius: 2,
+    borderBottomRightRadius: 2,
   },
   spriteContenedor: {
     width: 88,

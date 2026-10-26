@@ -29,6 +29,7 @@ export default function CatalogoScreen() {
         <ScreenHeader
           titulo="Pokédex"
           descripcion="Primera generación · 151 Pokémon"
+          cantidadFavoritos={favoritos.length}
         />
         {consultaPokemon.isPending ? (
           <View style={styles.estado}>
