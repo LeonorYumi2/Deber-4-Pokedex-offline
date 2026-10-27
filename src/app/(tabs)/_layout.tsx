@@ -1,4 +1,5 @@
 import { Tabs } from 'expo-router'
+import Ionicons from '@expo/vector-icons/Ionicons'
 import { StyleSheet } from 'react-native'
 import { colores } from '../../constants/theme'
 import { FontGate, fuentes } from '../../components/FontGate'
@@ -16,8 +17,32 @@ export default function TabsLayout() {
           tabBarItemStyle: styles.item,
         }}
       >
-        <Tabs.Screen name="index" options={{ title: 'Catálogo' }} />
-        <Tabs.Screen name="favoritos" options={{ title: 'Favoritos' }} />
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Catálogo',
+            tabBarIcon: ({ color, size, focused }) => (
+              <Ionicons
+                name={focused ? 'grid' : 'grid-outline'}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="favoritos"
+          options={{
+            title: 'Favoritos',
+            tabBarIcon: ({ color, size, focused }) => (
+              <Ionicons
+                name={focused ? 'star' : 'star-outline'}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
       </Tabs>
     </FontGate>
   )

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "appApi",
+    "name": "Pokédex",
     "slug": "appApi",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,6 +11,7 @@
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.leonoryumi.pokedex",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -18,7 +19,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false
-    },
+},
     "web": {
       "output": "static",
       "favicon": "./assets/images/favicon.png"
@@ -39,6 +40,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8c4a9423-aafb-460a-9ae8-d4d49211b0fa"
+      }
+    },
+    "owner": "leonoryumi"
   }
 }
